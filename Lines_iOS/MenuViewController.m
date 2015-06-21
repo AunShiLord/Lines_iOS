@@ -8,6 +8,11 @@
 
 #import "MenuViewController.h"
 
+#import "NewGameTypeViewController.h"
+#import "LeadereboardViewController.h"
+#import "SettingViewController.h"
+#import "HelpViewController.h"
+
 @interface MenuViewController ()
 
 @end
@@ -22,6 +27,30 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+#pragma mark - Button actions
+- (IBAction)continueGame:(id)sender {
+}
+- (IBAction)openNewGameTypeMenu:(id)sender {
+    NewGameTypeViewController *newGameTypeMenu = [NewGameTypeViewController new];
+    newGameTypeMenu.title = @"";
+    [self.navigationController pushViewController:newGameTypeMenu animated:YES];
+}
+- (IBAction)openLeaderboard:(id)sender {
+    LeadereboardViewController *leaderboard = [LeadereboardViewController new];
+    leaderboard.title = @"";
+    [self.navigationController pushViewController:leaderboard animated:YES];
+}
+- (IBAction)openSetting:(id)sender {
+    SettingViewController *settings = [SettingViewController new];
+    settings.title = @"";
+    [self.navigationController pushViewController:settings animated:YES];
+}
+- (IBAction)openHelp:(id)sender {
+    HelpViewController *help = [HelpViewController new];
+    help.title = @"";
+    [self.navigationController pushViewController:help animated:YES];
 }
 
 /*
