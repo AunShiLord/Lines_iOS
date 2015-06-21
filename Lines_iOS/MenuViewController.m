@@ -15,6 +15,10 @@
 
 @interface MenuViewController ()
 
+@property BOOL isGamePaused;
+
+@property (weak, nonatomic) IBOutlet UIButton *continueButton;
+
 @end
 
 @implementation MenuViewController
@@ -22,6 +26,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.continueButton.hidden = ([[NSUserDefaults standardUserDefaults] objectForKey:@"lastGameState"]) ? NO : YES;
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -30,23 +37,32 @@
 }
 
 #pragma mark - Button actions
+// press contione game
 - (IBAction)continueGame:(id)sender {
 }
+
+// press New game
 - (IBAction)openNewGameTypeMenu:(id)sender {
     NewGameTypeViewController *newGameTypeMenu = [NewGameTypeViewController new];
     newGameTypeMenu.title = @"";
     [self.navigationController pushViewController:newGameTypeMenu animated:YES];
 }
+
+// press Leaderboard
 - (IBAction)openLeaderboard:(id)sender {
     LeadereboardViewController *leaderboard = [LeadereboardViewController new];
     leaderboard.title = @"";
     [self.navigationController pushViewController:leaderboard animated:YES];
 }
+
+// press Settings
 - (IBAction)openSetting:(id)sender {
     SettingViewController *settings = [SettingViewController new];
     settings.title = @"";
     [self.navigationController pushViewController:settings animated:YES];
 }
+
+// press Help
 - (IBAction)openHelp:(id)sender {
     HelpViewController *help = [HelpViewController new];
     help.title = @"";
