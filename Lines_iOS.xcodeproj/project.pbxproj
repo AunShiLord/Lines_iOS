@@ -12,6 +12,9 @@
 		E1980C2E1B36986F007E71D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1980C2D1B36986F007E71D4 /* Images.xcassets */; };
 		E1980C311B36986F007E71D4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1980C2F1B36986F007E71D4 /* LaunchScreen.xib */; };
 		E1980C3D1B36986F007E71D4 /* Lines_iOSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E1980C3C1B36986F007E71D4 /* Lines_iOSTests.m */; };
+		E199FEC51B42CF6800DDDADD /* GameField.m in Sources */ = {isa = PBXBuildFile; fileRef = E199FEC41B42CF6800DDDADD /* GameField.m */; };
+		E199FEC81B42CF8900DDDADD /* GameFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E199FEC71B42CF8900DDDADD /* GameFieldCell.m */; };
+		E199FECE1B42CFF900DDDADD /* ColorBall.m in Sources */ = {isa = PBXBuildFile; fileRef = E199FECD1B42CFF900DDDADD /* ColorBall.m */; };
 		E1AE15B91B36A1E600E4FB34 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AE15B71B36A1E600E4FB34 /* MenuViewController.m */; };
 		E1AE15BA1B36A1E600E4FB34 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1AE15B81B36A1E600E4FB34 /* MenuViewController.xib */; };
 		E1AE15BF1B36A91600E4FB34 /* NewGameTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AE15BD1B36A91600E4FB34 /* NewGameTypeViewController.m */; };
@@ -48,6 +51,13 @@
 		E1980C361B36986F007E71D4 /* Lines_iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Lines_iOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1980C3B1B36986F007E71D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1980C3C1B36986F007E71D4 /* Lines_iOSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Lines_iOSTests.m; sourceTree = "<group>"; };
+		E199FEC31B42CF6800DDDADD /* GameField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameField.h; sourceTree = "<group>"; };
+		E199FEC41B42CF6800DDDADD /* GameField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameField.m; sourceTree = "<group>"; };
+		E199FEC61B42CF8900DDDADD /* GameFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameFieldCell.h; sourceTree = "<group>"; };
+		E199FEC71B42CF8900DDDADD /* GameFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameFieldCell.m; sourceTree = "<group>"; };
+		E199FECC1B42CFF900DDDADD /* ColorBall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorBall.h; sourceTree = "<group>"; };
+		E199FECD1B42CFF900DDDADD /* ColorBall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorBall.m; sourceTree = "<group>"; };
+		E199FECF1B42EC8B00DDDADD /* GameDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDelegate.h; sourceTree = "<group>"; };
 		E1AE15B61B36A1E600E4FB34 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E1AE15B71B36A1E600E4FB34 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E1AE15B81B36A1E600E4FB34 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
@@ -110,6 +120,7 @@
 		E1980C1F1B36986E007E71D4 /* Lines_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E199FEC21B42CF2C00DDDADD /* GameObjects */,
 				E1AE15DE1B36BD3C00E4FB34 /* GameScene */,
 				E1AE15B51B36A1D600E4FB34 /* Menu */,
 				E1AE15BB1B36A8E400E4FB34 /* New Game Type */,
@@ -149,6 +160,44 @@
 				E1980C3B1B36986F007E71D4 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E199FEC21B42CF2C00DDDADD /* GameObjects */ = {
+			isa = PBXGroup;
+			children = (
+				E199FECB1B42CFB400DDDADD /* ColorBall */,
+				E199FECA1B42CF9C00DDDADD /* GameFieldCell */,
+				E199FEC91B42CF8E00DDDADD /* GameField */,
+				E199FECF1B42EC8B00DDDADD /* GameDelegate.h */,
+			);
+			name = GameObjects;
+			sourceTree = "<group>";
+		};
+		E199FEC91B42CF8E00DDDADD /* GameField */ = {
+			isa = PBXGroup;
+			children = (
+				E199FEC31B42CF6800DDDADD /* GameField.h */,
+				E199FEC41B42CF6800DDDADD /* GameField.m */,
+			);
+			name = GameField;
+			sourceTree = "<group>";
+		};
+		E199FECA1B42CF9C00DDDADD /* GameFieldCell */ = {
+			isa = PBXGroup;
+			children = (
+				E199FEC61B42CF8900DDDADD /* GameFieldCell.h */,
+				E199FEC71B42CF8900DDDADD /* GameFieldCell.m */,
+			);
+			name = GameFieldCell;
+			sourceTree = "<group>";
+		};
+		E199FECB1B42CFB400DDDADD /* ColorBall */ = {
+			isa = PBXGroup;
+			children = (
+				E199FECC1B42CFF900DDDADD /* ColorBall.h */,
+				E199FECD1B42CFF900DDDADD /* ColorBall.m */,
+			);
+			name = ColorBall;
 			sourceTree = "<group>";
 		};
 		E1AE15B51B36A1D600E4FB34 /* Menu */ = {
@@ -316,9 +365,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E199FECE1B42CFF900DDDADD /* ColorBall.m in Sources */,
 				E1980C261B36986F007E71D4 /* AppDelegate.m in Sources */,
+				E199FEC51B42CF6800DDDADD /* GameField.m in Sources */,
 				E1AE15B91B36A1E600E4FB34 /* MenuViewController.m in Sources */,
 				E1980C231B36986F007E71D4 /* main.m in Sources */,
+				E199FEC81B42CF8900DDDADD /* GameFieldCell.m in Sources */,
 				E1AE15CF1B36AD5300E4FB34 /* LeadereboardViewController.m in Sources */,
 				E1AE15DC1B36AE3D00E4FB34 /* HelpViewController.m in Sources */,
 				E1AE15BF1B36A91600E4FB34 /* NewGameTypeViewController.m in Sources */,
