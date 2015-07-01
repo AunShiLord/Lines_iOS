@@ -10,14 +10,16 @@
 
 @implementation GameFieldCell
 
--(id)initWithIndex:(NSString *)index
+-(id)initWithIndex:(NSString *)index andRect:(CGRect)rect
 {
     self = [super init];
-    if(!self)
+    if(self)
     {
         self.index = index;
         self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GameFieldCell"]];
+        self.imageView.frame = rect;
         self.isHighlighted = NO;
+        
     }
     
     return self;

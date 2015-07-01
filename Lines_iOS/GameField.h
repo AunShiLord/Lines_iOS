@@ -19,13 +19,17 @@
 @property int numberOfColumns;
 @property (strong, nonatomic) NSMutableDictionary *gameFieldState;
 
+@property (nonatomic, readonly) CGFloat width;
+@property (nonatomic, readonly) CGFloat height;
+
 @property (strong, nonatomic) id<GameDelegate> delegate;
 
 /* init empty game field of size N * M
  The frame width of new GameField will be a screen size width minus margins
  */
 -(id)initEmptyFieldWithRows:(int)numberOfRows
-                    columns:(int)numberOfColumns;
+                    columns:(int)numberOfColumns
+                     margin:(int)margin;
 
 // init gameField from saved game state
 -(id)initWithGameFieldState:(NSDictionary *)gameFieldState;

@@ -13,7 +13,7 @@
 -(id)initWithColor:(ColorBallColor)color
 {
     self = [super init];
-    if (!self)
+    if (self)
     {
         self.color = color;
         NSString *colorName = @"";

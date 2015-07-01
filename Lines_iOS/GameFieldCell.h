@@ -17,7 +17,7 @@
 @property (strong, nonatomic) NSString *index;
 @property BOOL isHighlighted;
 
--(id)initWithIndex:(NSString *)index;
+-(id)initWithIndex:(NSString *)index andRect:(CGRect)rect;
 -(void)highlight;
 -(void)unhighlight;
 
