@@ -10,11 +10,12 @@
 
 @implementation ColorBall
 
--(id)initWithColor:(ColorBallColor)color
+-(id)initWithFrame:(CGRect)frame andColor:(ColorBallColor)color
 {
     self = [super init];
     if (self)
     {
+        self.frame = frame;
         self.color = color;
         NSString *colorName = @"";
         switch (color)
@@ -47,6 +48,8 @@
         self.contentMode = UIViewContentModeScaleAspectFit;
         self.index = nil;
     }
+    
+    NSLog(@"\n\n COLOR BALL Frame: %@\nBounds: %@\n\n", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds));
     
     return self;
 }

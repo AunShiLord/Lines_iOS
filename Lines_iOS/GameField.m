@@ -9,32 +9,65 @@
 #import "ColorBall.h"
 #import "GameField.h"
 #import "GameFieldCell.h"
+#import "PathFindNode.h"
+
+// for arc4random_uniform
+#include <stdlib.h>
 
 
 @interface GameField()
 
 @property (nonatomic, readwrite) CGFloat width;
 @property (nonatomic, readwrite) CGFloat height;
+@property NSMutableArray *gameFieldCells;
+
 @end;
 
 @implementation GameField
 
 -(id)initEmptyFieldWithRows:(int)numberOfRows columns:(int)numberOfColumns margin:(int)margin
 {
-    self = [super self];
+    self = [super init];
     if (self)
     {
-        self.gameFieldState = [NSMutableDictionary new];
+        // init N*M array
+        //self.gameFieldCells = (int **)malloc(numberOfRows * sizeof(int *));
+        self.gameFieldState = (int **)malloc(numberOfRows * sizeof(int *));
+        
+        for (int i = 0; i < numberOfRows; ++i)
+            self.gameFieldState[i] = (int *)malloc(numberOfColumns * sizeof(int));
+        
+        // init NSMutableArray where all gameFieldCells are will be kept
+        self.gameFieldCells = [NSMutableArray new];
+        for (int i = 0; i < numberOfRows; i++)
+        {
+            [self.gameFieldCells addObject:[NSMutableArray new]];
+            for (int j = 0; j < numberOfColumns; j++)
+            {
+                [self.gameFieldCells[i] addObject: [NSNull null]];
+            }
+        }
+        
+        // setting spawned balls to zero, number of columns and rows
+        self.spawnedBalls = 0;
+        self.numberOfRows = numberOfRows;
+        self.numberOfColumns = numberOfColumns;
+        
+        self.backgroundColor = [UIColor blackColor];
         // init new game field frame
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         self.width = screenRect.size.width - margin*2;
         self.height = self.width * (float)numberOfRows/(float)numberOfColumns;
+        CGFloat navigationBarHeight = 64;
         CGRect gameFieldRect = CGRectMake(margin,
-                                          screenRect.size.height - margin - self.height,
+                                          screenRect.size.height - margin - self.height - navigationBarHeight,
                                           self.width,
                                           self.height);
         
+        NSLog(@"\n\nScreen Height: %f\nHeight: %f\nGameFieldRect Y: %f", screenRect.size.height, self.height, gameFieldRect.origin.y);
+        
         self.frame = gameFieldRect;
+        //self.bounds = gameFieldRect;
         
         // size of each side of the gameFieldCell
         CGFloat gameFieldCellsize = self.width / numberOfColumns;
@@ -52,21 +85,241 @@
                 NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:j];
                 GameFieldCell *cell = [[GameFieldCell alloc] initWithIndex: index andRect:gameFieldRect];
                 [self addSubview:cell];
-                //[self.gameFieldState setObject:0 forKey:index];
+                self.gameFieldState[i][j] = -1;
+                self.gameFieldCells[i][j] = cell;
             }
         }
         //NSIndexPath *index = [NSIndexPath indexPathForRow:3 inSection:3];
         //NSLog(@"\nCHECK INDEX: %d", (int)[self.gameFieldState objectForKey:index]);
         
     }
+
+    NSLog(@"\n\n GAME FIELD Frame: %@\nBounds: %@\n\n", NSStringFromCGRect(self.frame), NSStringFromCGRect(self.bounds));
     
     return self;
 }
 
--(void)spawnBalls:(int)numberOfBallsToSpawn
+-(void)spawnBallsWithColors:(NSArray *)colors
 {
-    // if no more room to spawn balls
-    [self.delegate gameFieldOverloaded];
+    NSLog(@"\n\nGot balls:%d\nMaximum balls:%d", self.spawnedBalls + (int)[colors count], self.numberOfColumns * self.numberOfRows);
+    for (NSNumber *color in colors)
+    {
+        if (self.spawnedBalls + [colors count] > self.numberOfColumns * self.numberOfRows)
+            // if no more room to spawn balls
+            [self.delegate gameFieldOverloaded];
+        else
+        {
+            int randomRow, randomColumn, emptyCellCount, i;
+            
+            randomRow = 0;
+            // finding random row
+            emptyCellCount = 0;
+            while (emptyCellCount == 0)
+            {
+                randomRow = arc4random_uniform(self.numberOfRows);
+                // counting how many empty places in the row
+                for (i = 0; i < self.numberOfColumns; i++)
+                    if (self.gameFieldState[randomRow][i] == -1)
+                        emptyCellCount++;
+            }
+            
+            // finding random Column
+            while (randomColumn != 1234)
+            {
+                randomColumn = arc4random_uniform(self.numberOfColumns);
+                if (self.gameFieldState[randomRow][randomColumn] == -1)
+                {
+                    // place ball in index
+                    GameFieldCell *cell = self.gameFieldCells[randomRow][randomColumn];
+                    [cell spawnBallAtIndex:[NSIndexPath indexPathForItem:randomRow inSection:randomColumn]
+                                 withColor:color.intValue];
+                    self.gameFieldState[randomRow][randomColumn] = color.intValue;
+                    self.spawnedBalls++;
+                    break;
+                }
+            }
+        }
+
+    }
+}
+
+
+
+
+
+#pragma - A star algorithm methods
+// the code bellow is from
+// http://humblebeesoft.com/blog/?p=18
+// It was modified a bit, to fit my needs. A'Shi.
+
+-(BOOL)spaceIsBlocked:(int)x :(int)y;
+{
+    //general-purpose method to return whether a space is blocked
+    if(self.gameFieldState[x][y] == -1)
+        return YES;
+    else
+        return NO;
+}
+
+-(PathFindNode*)nodeInArray:(NSMutableArray*)a withX:(int)x Y:(int)y
+{
+    //Quickie method to find a given node in the array with a specific x,y value
+    NSEnumerator *e = [a objectEnumerator];
+    PathFindNode *n;
+    
+    while((n = [e nextObject]))
+    {
+        if((n->nodeX == x) && (n->nodeY == y))
+        {
+            return n;
+        }
+    }
+    
+    return nil;
+}
+-(PathFindNode*)lowestCostNodeInArray:(NSMutableArray*)a
+{
+    //Finds the node in a given array which has the lowest cost
+    PathFindNode *n, *lowest;
+    lowest = nil;
+    NSEnumerator *e = [a objectEnumerator];
+    
+    while((n = [e nextObject]))
+    {
+        if(lowest == nil)
+        {
+            lowest = n;
+        }
+        else
+        {
+            if(n->cost < lowest->cost)
+            {
+                lowest = n;
+            }
+        }
+    }
+    return lowest;
+}
+
+-(BOOL)findPath:(int)startX :(int)startY :(int)endX :(int)endY
+{
+    //find path function. takes a starting point and end point and performs the A-Star algorithm
+    //to find a path, if possible. Once a path is found it can be traced by following the last
+    //node's parent nodes back to the start
+    
+    int x,y;
+    int newX,newY;
+    int currentX,currentY;
+    NSMutableArray *openList, *closedList;
+    
+    if((startX == endX) && (startY == endY))
+        return NO; //make sure we're not already there
+    
+    //openList = [NSMutableArray array]; //array to hold open nodes
+    openList = [NSMutableArray array];
+    
+    closedList = [NSMutableArray array]; //array to hold closed nodes
+    
+    PathFindNode *currentNode = nil;
+    PathFindNode *aNode = nil;
+    
+    //create our initial 'starting node', where we begin our search
+    PathFindNode *startNode = [PathFindNode node];
+    startNode->nodeX = startX;
+    startNode->nodeY = startY;
+    startNode->parentNode = nil;
+    startNode->cost = 0;
+    //add it to the open list to be examined
+    [openList addObject: startNode];
+    
+    while([openList count])
+    {
+        //while there are nodes to be examined...
+        
+        //get the lowest cost node so far:
+        currentNode = [self lowestCostNodeInArray: openList];
+        
+        if((currentNode->nodeX == endX) && (currentNode->nodeY == endY))
+        {
+            //if the lowest cost node is the end node, we've found a path
+            
+            //********** PATH FOUND ********************
+            
+            //*****************************************//
+            //NOTE: Code below is for the Demo app to trace/mark the path
+//            aNode = currentNode->parentNode;
+//            while(aNode->parentNode != nil)
+//            {
+//                self.gameFieldState[aNode->nodeX][aNode->nodeY] = TILE_MARKED;
+//                aNode = aNode->parentNode;
+//            }
+            return YES;
+            //*****************************************//
+        }
+        else
+        {
+            //...otherwise, examine this node.
+            //remove it from open list, add it to closed:
+            [closedList addObject: currentNode];
+            [openList removeObject: currentNode];
+            
+            //lets keep track of our coordinates:
+            currentX = currentNode->nodeX;
+            currentY = currentNode->nodeY;
+            
+            //check all the surrounding nodes/tiles:
+            for(y=-1;y<=1;y++)
+            {
+                newY = currentY+y;
+                for(x=-1;x<=1;x++)
+                {
+                    newX = currentX+x;
+                    //if(y || x) //avoid 0,0
+                    if (abs(x)!=abs(y)) // avoid 0,0 and diagonal elements
+                    {
+                        //simple bounds check for the demo app's array
+                        if((newX>=0)&&(newY>=0)&&(newX<20)&&(newY<20))
+                        {
+                            //if the node isn't in the open list...
+                            if(![self nodeInArray: openList withX: newX Y:newY])
+                            {
+                                //and its not in the closed list...
+                                if(![self nodeInArray: closedList withX: newX Y:newY])
+                                {
+                                    //and the space isn't blocked
+                                    if(![self spaceIsBlocked: newX :newY])
+                                    {
+                                        //then add it to our open list and figure out
+                                        //the 'cost':
+                                        aNode = [PathFindNode node];
+                                        aNode->nodeX = newX;
+                                        aNode->nodeY = newY;
+                                        aNode->parentNode = currentNode;
+                                        aNode->cost = currentNode->cost + 1;
+                                        
+                                        //Compute your cost here. This demo app uses a simple manhattan
+                                        //distance, added to the existing cost
+                                        aNode->cost += (abs((newX) - endX) + abs((newY) - endY));
+                                        
+                                        [openList addObject: aNode];
+                                        
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    //**** NO PATH FOUND *****
+    return NO;
+}
+
+
+-(void)dealloc
+{
+    free(self.gameFieldState);
 }
 
 @end

@@ -8,8 +8,12 @@
 
 #import "GameSceneViewController.h"
 #import "GameField.h"
+#import "ColorBall.h"
 
-@interface GameSceneViewController ()
+// for arc4random_uniform
+#include <stdlib.h>
+
+@interface GameSceneViewController () <GameDelegate>
 
 @property (strong, nonatomic) GameField *gameField;
 
@@ -20,7 +24,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.gameField = [[GameField alloc] initEmptyFieldWithRows:5 columns:5 margin:10];
+    self.gameField.delegate = self;
+    
+    self.gameField = [[GameField alloc] initEmptyFieldWithRows:4 columns:4 margin:10];
+    [self.view addSubview:self.gameField];
+    
+    [self.gameField spawnBallsWithColors:@[[NSNumber numberWithInt:arc4random_uniform(7)],
+                                           [NSNumber numberWithInt:arc4random_uniform(7)],
+                                           [NSNumber numberWithInt:arc4random_uniform(7)]]];
     // Do any additional setup after loading the view from its nib.
 }
 
@@ -29,6 +40,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)spawnBallsTest:(id)sender
+{
+    [self.gameField spawnBallsWithColors:@[[NSNumber numberWithInt:arc4random_uniform(7)]]];
+}
+
+
+#pragma mark - Game Delegate Methods
+-(void)gameFieldOverloaded
+{
+    NSLog(@"\n\nGAME FIELD IS OVERLOADED");
+}
 /*
 #pragma mark - Navigation
 

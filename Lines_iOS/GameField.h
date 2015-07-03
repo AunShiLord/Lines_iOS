@@ -14,10 +14,12 @@
 
 @interface GameField : UIView <GameDelegate>
 
-@property (strong, nonatomic) UIView *view;
+//@property (strong, nonatomic) UIView *view;
 @property int numberOfRows;
 @property int numberOfColumns;
-@property (strong, nonatomic) NSMutableDictionary *gameFieldState;
+@property int **gameFieldState;
+
+@property int spawnedBalls;
 
 @property (nonatomic, readonly) CGFloat width;
 @property (nonatomic, readonly) CGFloat height;
@@ -34,7 +36,7 @@
 // init gameField from saved game state
 -(id)initWithGameFieldState:(NSDictionary *)gameFieldState;
 
--(void)spawnBalls:(int)numberOfBallsToSpawn;
+-(void)spawnBallsWithColors:(NSArray *)colors;
 
 // checks the whole game field for lines. If there any line return YES.
 -(BOOL)checkFieldForLines;

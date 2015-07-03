@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843B612C1B4653C400320F40 /* PathFindNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 843B612B1B4653C400320F40 /* PathFindNode.m */; };
 		E1980C231B36986F007E71D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E1980C221B36986F007E71D4 /* main.m */; };
 		E1980C261B36986F007E71D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E1980C251B36986F007E71D4 /* AppDelegate.m */; };
 		E1980C2E1B36986F007E71D4 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1980C2D1B36986F007E71D4 /* Images.xcassets */; };
@@ -53,6 +54,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		843B612A1B4653C400320F40 /* PathFindNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathFindNode.h; sourceTree = "<group>"; };
+		843B612B1B4653C400320F40 /* PathFindNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathFindNode.m; sourceTree = "<group>"; };
 		E1980C1D1B36986E007E71D4 /* Lines_iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Lines_iOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1980C211B36986F007E71D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E1980C221B36986F007E71D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -123,6 +126,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		843B61271B4652ED00320F40 /* A star algorirthm */ = {
+			isa = PBXGroup;
+			children = (
+				843B612A1B4653C400320F40 /* PathFindNode.h */,
+				843B612B1B4653C400320F40 /* PathFindNode.m */,
+			);
+			name = "A star algorirthm";
+			sourceTree = "<group>";
+		};
 		E1980C141B36986E007E71D4 = {
 			isa = PBXGroup;
 			children = (
@@ -145,6 +157,7 @@
 		E1980C1F1B36986E007E71D4 /* Lines_iOS */ = {
 			isa = PBXGroup;
 			children = (
+				843B61271B4652ED00320F40 /* A star algorirthm */,
 				E199FEC21B42CF2C00DDDADD /* GameObjects */,
 				E199FED01B44203F00DDDADD /* Controllers */,
 				E1980C241B36986F007E71D4 /* AppDelegate.h */,
@@ -433,6 +446,7 @@
 				E199FECE1B42CFF900DDDADD /* ColorBall.m in Sources */,
 				E1980C261B36986F007E71D4 /* AppDelegate.m in Sources */,
 				E199FEC51B42CF6800DDDADD /* GameField.m in Sources */,
+				843B612C1B4653C400320F40 /* PathFindNode.m in Sources */,
 				E1AE15B91B36A1E600E4FB34 /* MenuViewController.m in Sources */,
 				E1980C231B36986F007E71D4 /* main.m in Sources */,
 				E199FEC81B42CF8900DDDADD /* GameFieldCell.m in Sources */,

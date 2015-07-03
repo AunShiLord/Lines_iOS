@@ -29,7 +29,7 @@ typedef enum colorBallColors
 
 @property (assign, nonatomic) ColorBallColor color;
 
--(id)initWithColor:(ColorBallColor) color;
+-(id)initWithFrame:(CGRect)frame andColor:(ColorBallColor)color;
 -(void)setIndex;
 -(void)removeFromGameField;
 
