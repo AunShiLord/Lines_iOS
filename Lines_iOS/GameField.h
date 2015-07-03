@@ -12,7 +12,7 @@
 
 // neobhodimo realizovat' delegat, soobshaushiy chto pole perepolneno
 
-@interface GameField : NSObject <GameDelegate>
+@interface GameField : UIView <GameDelegate>
 
 @property (strong, nonatomic) UIView *view;
 @property int numberOfRows;

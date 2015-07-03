@@ -10,14 +10,14 @@
 
 @implementation GameFieldCell
 
--(id)initWithIndex:(NSString *)index andRect:(CGRect)rect
+-(id)initWithIndex:(NSIndexPath *)index andRect:(CGRect)rect
 {
     self = [super init];
     if(self)
     {
         self.index = index;
-        self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"GameFieldCell"]];
-        self.imageView.frame = rect;
+        self.image = [UIImage imageNamed:@"CellWithBorder"];
+        self.frame = rect;
         self.isHighlighted = NO;
         
     }
@@ -27,13 +27,13 @@
 
 -(void)highlight
 {
-    self.imageView.image = [UIImage imageNamed:@"GameFieldCellHighlighted"];
+    self.image = [UIImage imageNamed:@"HighlightedCell"];
     self.isHighlighted = YES;
 }
 
 -(void)unhighlight
 {
-    self.imageView.image = [UIImage imageNamed:@"GameFieldCell"];
+    self.image = [UIImage imageNamed:@"CellWithBorder"];
     self.isHighlighted = NO;
 }
 @end

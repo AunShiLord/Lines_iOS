@@ -1,33 +1,32 @@
 //
-//  NewGameTypeViewController.m
+//  GameSceneViewController.m
 //  Lines_iOS
 //
-//  Created by robert on 21/06/15.
+//  Created by robert on 01/07/15.
 //  Copyright (c) 2015 A'Shi. All rights reserved.
 //
 
-#import "NewGameTypeViewController.h"
 #import "GameSceneViewController.h"
+#import "GameField.h"
 
-@interface NewGameTypeViewController ()
+@interface GameSceneViewController ()
+
+@property (strong, nonatomic) GameField *gameField;
 
 @end
 
-@implementation NewGameTypeViewController
+@implementation GameSceneViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.gameField = [[GameField alloc] initEmptyFieldWithRows:5 columns:5 margin:10];
     // Do any additional setup after loading the view from its nib.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-
-- (IBAction)startNewGame:(id)sender {
-    GameSceneViewController *gameScene = [GameSceneViewController new];
-    [self.navigationController pushViewController:gameScene animated:YES];
 }
 
 /*

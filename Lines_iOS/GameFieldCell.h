@@ -11,13 +11,12 @@
 
 /* This class describes one cell on the GameField. Cell may contain ColorBall or be empty.
  Cell is a part of the GameField and on the the N * M cell. Cell might be highlighted */
-@interface GameFieldCell : NSObject
+@interface GameFieldCell : UIImageView
 
-@property (strong, nonatomic) UIImageView *imageView;
-@property (strong, nonatomic) NSString *index;
+@property (strong, nonatomic) NSIndexPath *index;
 @property BOOL isHighlighted;
 
--(id)initWithIndex:(NSString *)index andRect:(CGRect)rect;
+-(id)initWithIndex:(NSIndexPath *)index andRect:(CGRect)rect;
 -(void)highlight;
 -(void)unhighlight;
 

@@ -15,6 +15,18 @@
 		E199FEC51B42CF6800DDDADD /* GameField.m in Sources */ = {isa = PBXBuildFile; fileRef = E199FEC41B42CF6800DDDADD /* GameField.m */; };
 		E199FEC81B42CF8900DDDADD /* GameFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E199FEC71B42CF8900DDDADD /* GameFieldCell.m */; };
 		E199FECE1B42CFF900DDDADD /* ColorBall.m in Sources */ = {isa = PBXBuildFile; fileRef = E199FECD1B42CFF900DDDADD /* ColorBall.m */; };
+		E199FEDD1B4420BF00DDDADD /* BlueBall.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FED31B4420BE00DDDADD /* BlueBall.png */; };
+		E199FEDE1B4420BF00DDDADD /* Cell.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FED41B4420BF00DDDADD /* Cell.png */; };
+		E199FEDF1B4420BF00DDDADD /* CellWithBorder.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FED51B4420BF00DDDADD /* CellWithBorder.png */; };
+		E199FEE01B4420BF00DDDADD /* GreenBall.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FED61B4420BF00DDDADD /* GreenBall.png */; };
+		E199FEE11B4420BF00DDDADD /* HighlightedCell.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FED71B4420BF00DDDADD /* HighlightedCell.png */; };
+		E199FEE21B4420BF00DDDADD /* OrangeBall.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FED81B4420BF00DDDADD /* OrangeBall.png */; };
+		E199FEE31B4420BF00DDDADD /* RedBall.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FED91B4420BF00DDDADD /* RedBall.png */; };
+		E199FEE41B4420BF00DDDADD /* SkyBlueBall.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FEDA1B4420BF00DDDADD /* SkyBlueBall.png */; };
+		E199FEE51B4420BF00DDDADD /* VioletBall.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FEDB1B4420BF00DDDADD /* VioletBall.png */; };
+		E199FEE61B4420BF00DDDADD /* YellowBall.png in Resources */ = {isa = PBXBuildFile; fileRef = E199FEDC1B4420BF00DDDADD /* YellowBall.png */; };
+		E199FEEA1B442AC100DDDADD /* GameSceneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E199FEE81B442AC100DDDADD /* GameSceneViewController.m */; };
+		E199FEEB1B442AC100DDDADD /* GameSceneViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E199FEE91B442AC100DDDADD /* GameSceneViewController.xib */; };
 		E1AE15B91B36A1E600E4FB34 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AE15B71B36A1E600E4FB34 /* MenuViewController.m */; };
 		E1AE15BA1B36A1E600E4FB34 /* MenuViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1AE15B81B36A1E600E4FB34 /* MenuViewController.xib */; };
 		E1AE15BF1B36A91600E4FB34 /* NewGameTypeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AE15BD1B36A91600E4FB34 /* NewGameTypeViewController.m */; };
@@ -58,6 +70,19 @@
 		E199FECC1B42CFF900DDDADD /* ColorBall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorBall.h; sourceTree = "<group>"; };
 		E199FECD1B42CFF900DDDADD /* ColorBall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorBall.m; sourceTree = "<group>"; };
 		E199FECF1B42EC8B00DDDADD /* GameDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameDelegate.h; sourceTree = "<group>"; };
+		E199FED31B4420BE00DDDADD /* BlueBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BlueBall.png; sourceTree = "<group>"; };
+		E199FED41B4420BF00DDDADD /* Cell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Cell.png; sourceTree = "<group>"; };
+		E199FED51B4420BF00DDDADD /* CellWithBorder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CellWithBorder.png; sourceTree = "<group>"; };
+		E199FED61B4420BF00DDDADD /* GreenBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GreenBall.png; sourceTree = "<group>"; };
+		E199FED71B4420BF00DDDADD /* HighlightedCell.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HighlightedCell.png; sourceTree = "<group>"; };
+		E199FED81B4420BF00DDDADD /* OrangeBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = OrangeBall.png; sourceTree = "<group>"; };
+		E199FED91B4420BF00DDDADD /* RedBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RedBall.png; sourceTree = "<group>"; };
+		E199FEDA1B4420BF00DDDADD /* SkyBlueBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkyBlueBall.png; sourceTree = "<group>"; };
+		E199FEDB1B4420BF00DDDADD /* VioletBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = VioletBall.png; sourceTree = "<group>"; };
+		E199FEDC1B4420BF00DDDADD /* YellowBall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = YellowBall.png; sourceTree = "<group>"; };
+		E199FEE71B442AC100DDDADD /* GameSceneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameSceneViewController.h; sourceTree = "<group>"; };
+		E199FEE81B442AC100DDDADD /* GameSceneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameSceneViewController.m; sourceTree = "<group>"; };
+		E199FEE91B442AC100DDDADD /* GameSceneViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GameSceneViewController.xib; sourceTree = "<group>"; };
 		E1AE15B61B36A1E600E4FB34 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		E1AE15B71B36A1E600E4FB34 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		E1AE15B81B36A1E600E4FB34 /* MenuViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MenuViewController.xib; sourceTree = "<group>"; };
@@ -121,16 +146,12 @@
 			isa = PBXGroup;
 			children = (
 				E199FEC21B42CF2C00DDDADD /* GameObjects */,
-				E1AE15DE1B36BD3C00E4FB34 /* GameScene */,
-				E1AE15B51B36A1D600E4FB34 /* Menu */,
-				E1AE15BB1B36A8E400E4FB34 /* New Game Type */,
-				E1AE15C11B36AB3900E4FB34 /* Leaderboard */,
-				E1AE15D11B36ADEF00E4FB34 /* Settings */,
-				E1AE15D21B36ADFC00E4FB34 /* Help */,
+				E199FED01B44203F00DDDADD /* Controllers */,
 				E1980C241B36986F007E71D4 /* AppDelegate.h */,
 				E1980C251B36986F007E71D4 /* AppDelegate.m */,
 				E1980C2D1B36986F007E71D4 /* Images.xcassets */,
 				E1980C2F1B36986F007E71D4 /* LaunchScreen.xib */,
+				E199FED21B4420BE00DDDADD /* Pictures */,
 				E1980C201B36986F007E71D4 /* Supporting Files */,
 			);
 			path = Lines_iOS;
@@ -200,6 +221,36 @@
 			name = ColorBall;
 			sourceTree = "<group>";
 		};
+		E199FED01B44203F00DDDADD /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				E1AE15DE1B36BD3C00E4FB34 /* GameScene */,
+				E1AE15B51B36A1D600E4FB34 /* Menu */,
+				E1AE15BB1B36A8E400E4FB34 /* New Game Type */,
+				E1AE15C11B36AB3900E4FB34 /* Leaderboard */,
+				E1AE15D11B36ADEF00E4FB34 /* Settings */,
+				E1AE15D21B36ADFC00E4FB34 /* Help */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		E199FED21B4420BE00DDDADD /* Pictures */ = {
+			isa = PBXGroup;
+			children = (
+				E199FED31B4420BE00DDDADD /* BlueBall.png */,
+				E199FED41B4420BF00DDDADD /* Cell.png */,
+				E199FED51B4420BF00DDDADD /* CellWithBorder.png */,
+				E199FED61B4420BF00DDDADD /* GreenBall.png */,
+				E199FED71B4420BF00DDDADD /* HighlightedCell.png */,
+				E199FED81B4420BF00DDDADD /* OrangeBall.png */,
+				E199FED91B4420BF00DDDADD /* RedBall.png */,
+				E199FEDA1B4420BF00DDDADD /* SkyBlueBall.png */,
+				E199FEDB1B4420BF00DDDADD /* VioletBall.png */,
+				E199FEDC1B4420BF00DDDADD /* YellowBall.png */,
+			);
+			path = Pictures;
+			sourceTree = SOURCE_ROOT;
+		};
 		E1AE15B51B36A1D600E4FB34 /* Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +307,9 @@
 				E1AE15DF1B36BD5600E4FB34 /* TestViewController.h */,
 				E1AE15E01B36BD5600E4FB34 /* TestViewController.m */,
 				E1AE15E11B36BD5600E4FB34 /* TestViewController.xib */,
+				E199FEE71B442AC100DDDADD /* GameSceneViewController.h */,
+				E199FEE81B442AC100DDDADD /* GameSceneViewController.m */,
+				E199FEE91B442AC100DDDADD /* GameSceneViewController.xib */,
 			);
 			name = GameScene;
 			sourceTree = "<group>";
@@ -341,13 +395,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1980C311B36986F007E71D4 /* LaunchScreen.xib in Resources */,
+				E199FEE61B4420BF00DDDADD /* YellowBall.png in Resources */,
 				E1AE15D71B36AE2200E4FB34 /* SettingViewController.xib in Resources */,
 				E1AE15D01B36AD5300E4FB34 /* LeadereboardViewController.xib in Resources */,
+				E199FEDD1B4420BF00DDDADD /* BlueBall.png in Resources */,
 				E1AE15BA1B36A1E600E4FB34 /* MenuViewController.xib in Resources */,
 				E1980C2E1B36986F007E71D4 /* Images.xcassets in Resources */,
 				E1AE15DD1B36AE3D00E4FB34 /* HelpViewController.xib in Resources */,
+				E199FEE41B4420BF00DDDADD /* SkyBlueBall.png in Resources */,
+				E199FEE11B4420BF00DDDADD /* HighlightedCell.png in Resources */,
+				E199FEE51B4420BF00DDDADD /* VioletBall.png in Resources */,
+				E199FEDE1B4420BF00DDDADD /* Cell.png in Resources */,
 				E1AE15E31B36BD5600E4FB34 /* TestViewController.xib in Resources */,
+				E199FEEB1B442AC100DDDADD /* GameSceneViewController.xib in Resources */,
+				E199FEE01B4420BF00DDDADD /* GreenBall.png in Resources */,
+				E199FEE31B4420BF00DDDADD /* RedBall.png in Resources */,
+				E199FEDF1B4420BF00DDDADD /* CellWithBorder.png in Resources */,
 				E1AE15C01B36A91600E4FB34 /* NewGameTypeViewController.xib in Resources */,
+				E199FEE21B4420BF00DDDADD /* OrangeBall.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +441,7 @@
 				E1AE15BF1B36A91600E4FB34 /* NewGameTypeViewController.m in Sources */,
 				E1AE15E21B36BD5600E4FB34 /* TestViewController.m in Sources */,
 				E1AE15D61B36AE2200E4FB34 /* SettingViewController.m in Sources */,
+				E199FEEA1B442AC100DDDADD /* GameSceneViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

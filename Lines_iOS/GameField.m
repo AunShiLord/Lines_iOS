@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 A'Shi. All rights reserved.
 //
 
+#import "ColorBall.h"
 #import "GameField.h"
 #import "GameFieldCell.h"
 
@@ -23,16 +24,17 @@
     self = [super self];
     if (self)
     {
+        self.gameFieldState = [NSMutableDictionary new];
         // init new game field frame
         CGRect screenRect = [[UIScreen mainScreen] bounds];
         self.width = screenRect.size.width - margin*2;
-        self.height = self.width * (float)numberOfColumns/(float)numberOfRows;
+        self.height = self.width * (float)numberOfRows/(float)numberOfColumns;
         CGRect gameFieldRect = CGRectMake(margin,
                                           screenRect.size.height - margin - self.height,
                                           self.width,
                                           self.height);
         
-        self.view = [[UIView alloc] initWithFrame:gameFieldRect];
+        self.frame = gameFieldRect;
         
         // size of each side of the gameFieldCell
         CGFloat gameFieldCellsize = self.width / numberOfColumns;
@@ -47,10 +49,14 @@
                                                   gameFieldCellsize * i,
                                                   gameFieldCellsize,
                                                   gameFieldCellsize);
-                GameFieldCell *cell = [[GameFieldCell alloc] initWithIndex: dgdg andRect:gameFieldRect];
+                NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:j];
+                GameFieldCell *cell = [[GameFieldCell alloc] initWithIndex: index andRect:gameFieldRect];
+                [self addSubview:cell];
+                //[self.gameFieldState setObject:0 forKey:index];
             }
         }
-        
+        //NSIndexPath *index = [NSIndexPath indexPathForRow:3 inSection:3];
+        //NSLog(@"\nCHECK INDEX: %d", (int)[self.gameFieldState objectForKey:index]);
         
     }
     

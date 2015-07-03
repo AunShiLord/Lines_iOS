@@ -25,17 +25,17 @@
             case ColorBallColorOrange:
                 colorName = @"Orange";
                 break;
-            case ColorBallColorPuple:
-                colorName = @"Purple";
+            case ColorBallColorViolet:
+                colorName = @"Violet";
                 break;
             case ColorBallColorRed:
                 colorName = @"Red";
                 break;
-            case ColorBallColorSapphirineBlue:
-                colorName = @"SapphirineBlue";
+            case ColorBallColorBlue:
+                colorName = @"Blue";
                 break;
-            case ColorBallColorWaterBlue:
-                colorName = @"WaterBlue";
+            case ColorBallColorSkyBlue:
+                colorName = @"SkyBlue";
                 break;
             case ColorBallColorYellow:
                 colorName = @"Yellow";
@@ -43,8 +43,8 @@
             default:
                 break;
         }
-        self.imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@Ball", colorName]]];
-#warning Need decision with index type
+        self.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@Ball", colorName]];
+        self.contentMode = UIViewContentModeScaleAspectFit;
         self.index = nil;
     }
     

@@ -431,11 +431,6 @@
                     <rect key="frame" x="60" y="146" width="200" height="66"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <subviews>
-                        <view contentMode="scaleToFill" id="VKw-tb-g0L">
-                            <rect key="frame" x="8" y="16" width="33" height="33"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <color key="backgroundColor" red="0.33653787149999997" green="0.81086531930000005" blue="0.32073749400000001" alpha="1" colorSpace="calibratedRGB"/>
-                        </view>
                         <view contentMode="scaleToFill" id="Tz1-sr-Uu1">
                             <rect key="frame" x="84" y="16" width="33" height="33"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -445,6 +440,11 @@
                             <rect key="frame" x="159" y="16" width="33" height="33"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <color key="backgroundColor" red="0.81086531930000005" green="0.8095356172016317" blue="0.16391078353932609" alpha="1" colorSpace="calibratedRGB"/>
+                        </view>
+                        <view contentMode="scaleToFill" id="VKw-tb-g0L">
+                            <rect key="frame" x="8" y="16" width="33" height="33"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <color key="backgroundColor" red="0.33653787149999997" green="0.81086531930000005" blue="0.32073749400000001" alpha="1" colorSpace="calibratedRGB"/>
                         </view>
                     </subviews>
                     <color key="backgroundColor" red="0.53858152462393427" green="0.90490336166524421" blue="1" alpha="1" colorSpace="calibratedRGB"/>

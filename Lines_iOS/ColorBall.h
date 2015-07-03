@@ -16,18 +16,16 @@ typedef enum colorBallColors
     ColorBallColorOrange,
     ColorBallColorYellow,
     ColorBallColorGreen,
-    ColorBallColorWaterBlue,
-    ColorBallColorSapphirineBlue,
-    ColorBallColorPuple
+    ColorBallColorSkyBlue,
+    ColorBallColorBlue,
+    ColorBallColorViolet
 } ColorBallColor;
 
-@interface ColorBall : NSObject
-
-@property (strong, nonatomic) UIImageView *imageView;
+@interface ColorBall : UIImageView
 
 #warning maybe some custom type?
 // Type represents position in the GameField.
-@property (strong, nonatomic) NSString *index;
+@property (strong, nonatomic) NSIndexPath *index;
 
 @property (assign, nonatomic) ColorBallColor color;
 
