@@ -8,23 +8,25 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "GameDelegate.h"
+#import "GameFieldDelegate.h"
 
 // neobhodimo realizovat' delegat, soobshaushiy chto pole perepolneno
 
-@interface GameField : UIView <GameDelegate>
+@interface GameField : UIView <GameFieldDelegate>
 
 //@property (strong, nonatomic) UIView *view;
 @property int numberOfRows;
 @property int numberOfColumns;
 @property int **gameFieldState;
 
+@property (strong, nonatomic) NSIndexPath *currentlySelectedCellIndex;
+
 @property int spawnedBalls;
 
 @property (nonatomic, readonly) CGFloat width;
 @property (nonatomic, readonly) CGFloat height;
 
-@property (strong, nonatomic) id<GameDelegate> delegate;
+@property (weak, nonatomic) id<GameFieldDelegate> delegate;
 
 /* init empty game field of size N * M
  The frame width of new GameField will be a screen size width minus margins
@@ -37,6 +39,9 @@
 -(id)initWithGameFieldState:(NSDictionary *)gameFieldState;
 
 -(void)spawnBallsWithColors:(NSArray *)colors;
+
+// scans GameField for possible lines and destroy them. Returns recieved score points
+-(int)scanForLinesAndGetScorePoints;
 
 // checks the whole game field for lines. If there any line return YES.
 -(BOOL)checkFieldForLines;

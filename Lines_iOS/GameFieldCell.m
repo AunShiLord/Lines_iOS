@@ -16,10 +16,16 @@
     if(self)
     {
         self.index = index;
-        self.currentState = 0;
+        self.currentState = -1;
         self.image = [UIImage imageNamed:@"CellWithBorder"];
         self.frame = rect;
         self.isHighlighted = NO;
+        self.userInteractionEnabled = YES;
+        
+        UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                     action:@selector(handleCellTap:)];
+        
+        [self addGestureRecognizer:tapGesture];
         
     }
     
@@ -27,10 +33,10 @@
     return self;
 }
 
--(void)spawnBallAtIndex:(NSIndexPath *)index withColor:(ColorBallColor) colorBallColor
+-(void)spawnBallwithColor:(ColorBallColor) colorBallColor
 {
     // creating rect for ColorBall
-    CGFloat margin = self.frame.size.width * 0.05;
+    CGFloat margin = self.frame.size.width * 0.15;
     CGRect gameFieldCellRect = self.bounds;
     CGRect colorBallRect = CGRectMake(gameFieldCellRect.origin.x + margin,
                                        gameFieldCellRect.origin.y + margin,
@@ -41,6 +47,29 @@
     
     // change state
     self.currentState = colorBallColor;
+}
+
+-(void)removeBall
+{
+    if (self.currentState != -1)
+    {
+        self.currentState = -1;
+        for (UIView *subview in self.subviews)
+            [subview removeFromSuperview];
+    }
+}
+
+-(void)handleCellTap:(UITapGestureRecognizer *)gestureRecognizer
+{
+//    if (self.currentState != -1)
+//    {
+//        if (self.isHighlighted)
+//            [self unhighlight];
+//        else
+//            [self highlight];
+//    }
+    [self.delegate gameFieldCelltapped:self];
+    
 }
 
 -(void)highlight

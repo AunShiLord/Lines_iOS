@@ -15,7 +15,7 @@
 #include <stdlib.h>
 
 
-@interface GameField()
+@interface GameField() <GameFieldCellDelegate>
 
 @property (nonatomic, readwrite) CGFloat width;
 @property (nonatomic, readwrite) CGFloat height;
@@ -48,6 +48,9 @@
             }
         }
         
+        // setting currently selectet cell to nil
+        self.currentlySelectedCellIndex = nil;
+        
         // setting spawned balls to zero, number of columns and rows
         self.spawnedBalls = 0;
         self.numberOfRows = numberOfRows;
@@ -78,12 +81,13 @@
         {
             for (int j=0; j<numberOfColumns; j++)
             {
-                CGRect gameFieldRect = CGRectMake(gameFieldCellsize * j,
-                                                  gameFieldCellsize * i,
-                                                  gameFieldCellsize,
-                                                  gameFieldCellsize);
+                CGRect gameFieldRect = CGRectMake(gameFieldCellsize * j + 1,
+                                                  gameFieldCellsize * i + 1,
+                                                  gameFieldCellsize - 2,
+                                                  gameFieldCellsize - 2);
                 NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:j];
                 GameFieldCell *cell = [[GameFieldCell alloc] initWithIndex: index andRect:gameFieldRect];
+                cell.delegate = self;
                 [self addSubview:cell];
                 self.gameFieldState[i][j] = -1;
                 self.gameFieldCells[i][j] = cell;
@@ -104,9 +108,12 @@
     NSLog(@"\n\nGot balls:%d\nMaximum balls:%d", self.spawnedBalls + (int)[colors count], self.numberOfColumns * self.numberOfRows);
     for (NSNumber *color in colors)
     {
-        if (self.spawnedBalls + [colors count] > self.numberOfColumns * self.numberOfRows)
+        if (self.spawnedBalls == self.numberOfColumns * self.numberOfRows)
+        {
             // if no more room to spawn balls
-            [self.delegate gameFieldOverloaded];
+            [self.delegate gameFieldOverloaded:self];
+            break;
+        }
         else
         {
             int randomRow, randomColumn, emptyCellCount, i;
@@ -131,10 +138,12 @@
                 {
                     // place ball in index
                     GameFieldCell *cell = self.gameFieldCells[randomRow][randomColumn];
-                    [cell spawnBallAtIndex:[NSIndexPath indexPathForItem:randomRow inSection:randomColumn]
-                                 withColor:color.intValue];
+                    [cell spawnBallwithColor:color.intValue];
                     self.gameFieldState[randomRow][randomColumn] = color.intValue;
                     self.spawnedBalls++;
+                    if (self.spawnedBalls == self.numberOfColumns * self.numberOfRows)
+                        // if no more room to spawn balls
+                        [self.delegate gameFieldOverloaded:self];
                     break;
                 }
             }
@@ -143,8 +152,150 @@
     }
 }
 
+-(int)scanForLinesAndGetScorePoints
+{
+    int scorePoints = 0;
+    int minLineLength = 5;
+    int i, j, k, g;
+    BOOL isPossibleLine = TRUE;
+    int numberOfMatches = 0;
+    int currentColor;
+    
+    NSMutableArray *posibleIndexes = [NSMutableArray new];
+    NSMutableArray *linesToDelete = [NSMutableArray new];
+    
+    
+    for (i = 0; i < self.numberOfRows; i++)
+    {
+        for (j = 0; j < self.numberOfColumns; j++)
+        {
+            currentColor = self.gameFieldState[i][j];
+            // check if cell is not empty
+            if (currentColor != -1)
+            {
+                [posibleIndexes removeAllObjects];
+                isPossibleLine = TRUE;
+                numberOfMatches = 0;
+                [posibleIndexes addObject:[NSIndexPath indexPathForRow:i inSection:j]];
+                
+                // check right
+                k = j;
+                while (k<self.numberOfColumns)
+                {
+                    k++;
+                    if (k<self.numberOfColumns)
+                    {
+                        if (self.gameFieldState[i][k] == currentColor)
+                        {
+                            numberOfMatches++;
+                            [posibleIndexes addObject:[NSIndexPath indexPathForRow:i inSection:k]];
+                        }
+                        else
+                            break
+                    }
+                }
 
+                // check up
+                k = i;
+                while (k<self.numberOfRows)
+                {
+                    k++;
+                    if (k<self.numberOfRows)
+                    {
+                        if (self.gameFieldState[k][j] == currentColor)
+                        {
+                            numberOfMatches++;
+                            [posibleIndexes addObject:[NSIndexPath indexPathForRow:k inSection:i]];
+                        }
+                    }
+                    else
+                        break;
+                }
+                
+                // check up right
+                k = i;
+                g = j;
+                while (k<self.numberOfRows & g<self.numberOfColumns)
+                {
+                    k++;
+                    g++;
+                    if (k<self.numberOfRows & g<self.numberOfColumns)
+                    {
+                        if (self.gameFieldState[k][g] == currentColor)
+                        {
+                            numberOfMatches++;
+                            [posibleIndexes addObject:[NSIndexPath indexPathForRow:k inSection:g]];
+                        }
+                        else
+                            break;
+                    }
+                }
+                
+                // check down right
+                k = i;
+                g = j;
+                while (k<self.numberOfRows & g>0)
+                {
+                    k++;
+                    g--;
+                    if (k<self.numberOfRows & g>0)
+                    {
+                        if (self.gameFieldState[k][g] == currentColor)
+                        {
+                            numberOfMatches++;
+                            [posibleIndexes addObject:[NSIndexPath indexPathForRow:k inSection:g]];
+                        }
+                        else
+                            break;
+                    }
+                }
+                
+                // dsf
+            }
+        }
+    }
+}
 
+# pragma mark GameFieldCell delegate methods
+-(void)gameFieldCelltapped:(GameFieldCell *)gameFieldCell
+{
+    if (self.currentlySelectedCellIndex)
+    {
+        // if this cell is already selected than unselect it
+        if (gameFieldCell.index == self.currentlySelectedCellIndex)
+        {
+            [gameFieldCell unhighlight];
+            self.currentlySelectedCellIndex = nil;
+        }
+        // if another cell is already selected, than check state of the the selected cell
+        // and if it is empty, than move color ball and unselect
+        else
+        {
+            if (gameFieldCell.currentState == -1)
+            {
+                GameFieldCell *currentlySelectedCell = self.gameFieldCells[self.currentlySelectedCellIndex.row][self.currentlySelectedCellIndex.section];
+                [currentlySelectedCell unhighlight];
+                
+                [gameFieldCell spawnBallwithColor:currentlySelectedCell.currentState];
+                [currentlySelectedCell removeBall];
+                
+                // remember ball positions in gameFieldState
+                self.gameFieldState[self.currentlySelectedCellIndex.row][self.currentlySelectedCellIndex.section] = -1;
+                self.gameFieldState[gameFieldCell.index.row][gameFieldCell.index.section] = gameFieldCell.currentState;
+                self.currentlySelectedCellIndex = nil;
+                
+                // delegate method that informs GameScene controller that turn is over
+                [self gameField:self movedBallFrom:currentlySelectedCell to:gameFieldCell];
+            }
+        }
+    }
+    // if cell is not yet selected, than select it
+    else
+    {
+        self.currentlySelectedCellIndex = gameFieldCell.index;
+        [gameFieldCell highlight];
+    }
+}
 
 
 #pragma - A star algorithm methods
