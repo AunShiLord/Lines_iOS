@@ -65,22 +65,24 @@
     self.scorePointLabel.text = [NSString stringWithFormat:@"Score: %d", self.scorePoints];
 }
 
+-(void)updateScorePoints:(int)scorePoints
+{
+    scorePoints *= self.killingSpreeMultiplyer;
+    self.killingSpreeMultiplyer += 0.25;
+    self.scorePoints += scorePoints;
+    self.scorePointLabel.text = [NSString stringWithFormat:@"Score: %d", self.scorePoints];
+}
+
 // turn is over
 -(void)gameField:(GameField *)gameField movedBallFrom:(GameFieldCell *)startCell to:(GameFieldCell *)destinationCell
 {
     NSLog(@"\n\nBALL MOVED\n\n");
     [gameField testPrintGameFieldState];
+    int newScorePoints = [self.gameField scanForLinesAndGetScorePoints];
     
     // check lines, destroy balls, count scorePoints
-    int newScorePoints;
-    newScorePoints = [self.gameField scanForLinesAndGetScorePoints];
     if (newScorePoints != 0)
-    {
-        newScorePoints *= self.killingSpreeMultiplyer;
-        self.killingSpreeMultiplyer += 0.1;
-        self.scorePoints += newScorePoints;
-        self.scorePointLabel.text = [NSString stringWithFormat:@"Score: %d", self.scorePoints];
-    }
+        [self updateScorePoints:newScorePoints];
     // if no balls were deleted, then spawn balls
     else
     {
@@ -88,6 +90,11 @@
                                                [NSNumber numberWithInt:arc4random_uniform(7)],
                                                [NSNumber numberWithInt:arc4random_uniform(7)]]];
         self.killingSpreeMultiplyer = 1.0;
+        newScorePoints = [self.gameField scanForLinesAndGetScorePoints];
+        if (newScorePoints != 0)
+            [self updateScorePoints:newScorePoints];
+        
+        
     }
     
 }
