@@ -17,6 +17,10 @@
 
 @property (strong, nonatomic) GameField *gameField;
 
+@property CGFloat killingSpreeMultiplyer;
+@property int scorePoints;
+@property (weak, nonatomic) IBOutlet UILabel *scorePointLabel;
+
 @end
 
 @implementation GameSceneViewController
@@ -24,11 +28,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.killingSpreeMultiplyer = 1.0;
+    self.scorePoints = 0;
     self.gameField = [[GameField alloc] initEmptyFieldWithRows:9 columns:9 margin:10];
     self.gameField.delegate = self;
     [self.view addSubview:self.gameField];
     
     [self.gameField spawnBallsWithColors:@[[NSNumber numberWithInt:arc4random_uniform(7)],
+                                           [NSNumber numberWithInt:arc4random_uniform(7)],
+                                           [NSNumber numberWithInt:arc4random_uniform(7)],
                                            [NSNumber numberWithInt:arc4random_uniform(7)],
                                            [NSNumber numberWithInt:arc4random_uniform(7)]]];
     // Do any additional setup after loading the view from its nib.
@@ -51,15 +59,36 @@
 {
     NSLog(@"\n\nGAME FIELD IS OVERLOADED");
 }
+- (IBAction)checkLines:(id)sender
+{
+    self.scorePoints = [self.gameField scanForLinesAndGetScorePoints];
+    self.scorePointLabel.text = [NSString stringWithFormat:@"Score: %d", self.scorePoints];
+}
 
+// turn is over
 -(void)gameField:(GameField *)gameField movedBallFrom:(GameFieldCell *)startCell to:(GameFieldCell *)destinationCell
 {
     NSLog(@"\n\nBALL MOVED\n\n");
     [gameField testPrintGameFieldState];
     
-    [self.gameField spawnBallsWithColors:@[[NSNumber numberWithInt:arc4random_uniform(7)],
-                                           [NSNumber numberWithInt:arc4random_uniform(7)],
-                                           [NSNumber numberWithInt:arc4random_uniform(7)]]];
+    // check lines, destroy balls, count scorePoints
+    int newScorePoints;
+    newScorePoints = [self.gameField scanForLinesAndGetScorePoints];
+    if (newScorePoints != 0)
+    {
+        newScorePoints *= self.killingSpreeMultiplyer;
+        self.killingSpreeMultiplyer += 0.1;
+        self.scorePoints += newScorePoints;
+        self.scorePointLabel.text = [NSString stringWithFormat:@"Score: %d", self.scorePoints];
+    }
+    // if no balls were deleted, then spawn balls
+    else
+    {
+        [self.gameField spawnBallsWithColors:@[[NSNumber numberWithInt:arc4random_uniform(7)],
+                                               [NSNumber numberWithInt:arc4random_uniform(7)],
+                                               [NSNumber numberWithInt:arc4random_uniform(7)]]];
+        self.killingSpreeMultiplyer = 1.0;
+    }
     
 }
 

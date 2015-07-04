@@ -175,7 +175,7 @@
             {
                 [posibleIndexes removeAllObjects];
                 isPossibleLine = TRUE;
-                numberOfMatches = 0;
+                numberOfMatches = 1;
                 [posibleIndexes addObject:[NSIndexPath indexPathForRow:i inSection:j]];
                 
                 // check right
@@ -200,13 +200,15 @@
                         }
                         else
                         {
-                            [posibleIndexes removeAllObjects];
                             break;
                         }
                     }
                 }
+                [posibleIndexes removeAllObjects];
+                numberOfMatches = 1;
 
-                // check up
+                // check down
+                [posibleIndexes addObject:[NSIndexPath indexPathForRow:i inSection:j]];
                 k = i;
                 while (k<self.numberOfRows)
                 {
@@ -216,25 +218,28 @@
                         if (self.gameFieldState[k][j] == currentColor)
                         {
                             numberOfMatches++;
-                            [posibleIndexes addObject:[NSIndexPath indexPathForRow:k inSection:i]];
+                            [posibleIndexes addObject:[NSIndexPath indexPathForRow:k inSection:j]];
                             if (numberOfMatches == minLineLenght)
                             {
                                 linesToDelete = [self addNewIndexesToArray:linesToDelete fromArray:posibleIndexes];
                             }
                             if (numberOfMatches > minLineLenght)
                             {
-                                [linesToDelete addObject:[NSIndexPath indexPathForRow:k inSection:i]];
+                                [linesToDelete addObject:[NSIndexPath indexPathForRow:k inSection:j]];
                             }
                         }
                         else
                         {
-                            [posibleIndexes removeAllObjects];
                             break;
                         }
+                    }
 
                 }
+                [posibleIndexes removeAllObjects];
+                numberOfMatches = 1;
                 
                 // check up right
+                [posibleIndexes addObject:[NSIndexPath indexPathForRow:i inSection:j]];
                 k = i;
                 g = j;
                 while (k<self.numberOfRows & g<self.numberOfColumns)
@@ -258,13 +263,15 @@
                         }
                         else
                         {
-                            [posibleIndexes removeAllObjects];
                             break;
                         }
                     }
                 }
+                [posibleIndexes removeAllObjects];
+                numberOfMatches = 1;
                 
                 // check down right
+                [posibleIndexes addObject:[NSIndexPath indexPathForRow:i inSection:j]];
                 k = i;
                 g = j;
                 while (k<self.numberOfRows & g>0)
@@ -288,24 +295,26 @@
                         }
                         else
                         {
-                            [posibleIndexes removeAllObjects];
                             break;
                         }
                     }
                 }
+                [posibleIndexes removeAllObjects];
+                numberOfMatches = 1;
             }
         }
     }
-        
-    }
+    
     
     // count scorePoints
     scorePoints = 2 * [linesToDelete count];
+    self.spawnedBalls -= [linesToDelete count];
     for (NSIndexPath *index in linesToDelete)
     {
         GameFieldCell *cell = self.gameFieldCells[index.row][index.section];
         [cell removeBall];
         self.gameFieldState[index.row][index.section] = -1;
+        NSLog(@"\nIndex to delete: row: %d col: %d \n", index.row, index.section);
     }
     
     return scorePoints;
@@ -316,12 +325,12 @@
 {
     BOOL isUnique = YES;
     NSMutableArray *resultArray = [NSMutableArray new];
-    for (NSIndexPath *firstIndex in firstArray)
+    for (NSIndexPath *firstIndex in secondArray)
     {
         isUnique = YES;
-        for (NSIndexPath *secondIndex in secondArray)
+        for (NSIndexPath *secondIndex in firstArray)
         {
-            if (firstIndex.row != secondIndex.row || firstIndex.section != secondIndex.section)
+            if (firstIndex.row == secondIndex.row || firstIndex.section == secondIndex.section)
             {
                 isUnique = NO;
                 break;
@@ -332,6 +341,8 @@
             [resultArray addObject:firstIndex];
         }
     }
+    
+    [resultArray addObjectsFromArray:firstArray];
     
     return resultArray;
 }
