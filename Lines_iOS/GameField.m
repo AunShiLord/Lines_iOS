@@ -155,7 +155,7 @@
 -(int)scanForLinesAndGetScorePoints
 {
     int scorePoints = 0;
-    int minLineLength = 5;
+    int minLineLenght = 5;
     int i, j, k, g;
     BOOL isPossibleLine = TRUE;
     int numberOfMatches = 0;
@@ -189,9 +189,20 @@
                         {
                             numberOfMatches++;
                             [posibleIndexes addObject:[NSIndexPath indexPathForRow:i inSection:k]];
+                            if (numberOfMatches == minLineLenght)
+                            {
+                                linesToDelete = [self addNewIndexesToArray:linesToDelete fromArray:posibleIndexes];
+                            }
+                            if (numberOfMatches > minLineLenght)
+                            {
+                                [linesToDelete addObject:[NSIndexPath indexPathForRow:i inSection:k]];
+                            }
                         }
                         else
-                            break
+                        {
+                            [posibleIndexes removeAllObjects];
+                            break;
+                        }
                     }
                 }
 
@@ -206,10 +217,21 @@
                         {
                             numberOfMatches++;
                             [posibleIndexes addObject:[NSIndexPath indexPathForRow:k inSection:i]];
+                            if (numberOfMatches == minLineLenght)
+                            {
+                                linesToDelete = [self addNewIndexesToArray:linesToDelete fromArray:posibleIndexes];
+                            }
+                            if (numberOfMatches > minLineLenght)
+                            {
+                                [linesToDelete addObject:[NSIndexPath indexPathForRow:k inSection:i]];
+                            }
                         }
-                    }
-                    else
-                        break;
+                        else
+                        {
+                            [posibleIndexes removeAllObjects];
+                            break;
+                        }
+
                 }
                 
                 // check up right
@@ -225,9 +247,20 @@
                         {
                             numberOfMatches++;
                             [posibleIndexes addObject:[NSIndexPath indexPathForRow:k inSection:g]];
+                            if (numberOfMatches == minLineLenght)
+                            {
+                                linesToDelete = [self addNewIndexesToArray:linesToDelete fromArray:posibleIndexes];
+                            }
+                            if (numberOfMatches > minLineLenght)
+                            {
+                                [linesToDelete addObject:[NSIndexPath indexPathForRow:k inSection:g]];
+                            }
                         }
                         else
+                        {
+                            [posibleIndexes removeAllObjects];
                             break;
+                        }
                     }
                 }
                 
@@ -244,16 +277,63 @@
                         {
                             numberOfMatches++;
                             [posibleIndexes addObject:[NSIndexPath indexPathForRow:k inSection:g]];
+                            if (numberOfMatches == minLineLenght)
+                            {
+                                linesToDelete = [self addNewIndexesToArray:linesToDelete fromArray:posibleIndexes];
+                            }
+                            if (numberOfMatches > minLineLenght)
+                            {
+                                [linesToDelete addObject:[NSIndexPath indexPathForRow:k inSection:g]];
+                            }
                         }
                         else
+                        {
+                            [posibleIndexes removeAllObjects];
                             break;
+                        }
                     }
                 }
-                
-                // dsf
             }
         }
     }
+        
+    }
+    
+    // count scorePoints
+    scorePoints = 2 * [linesToDelete count];
+    for (NSIndexPath *index in linesToDelete)
+    {
+        GameFieldCell *cell = self.gameFieldCells[index.row][index.section];
+        [cell removeBall];
+        self.gameFieldState[index.row][index.section] = -1;
+    }
+    
+    return scorePoints;
+}
+
+-(NSMutableArray *)addNewIndexesToArray:(NSMutableArray *)firstArray fromArray:(NSMutableArray *)secondArray
+//-(NSMutableArray *)addNewIndexesToArray:(NSMutableArray *)firstArray fromArray:
+{
+    BOOL isUnique = YES;
+    NSMutableArray *resultArray = [NSMutableArray new];
+    for (NSIndexPath *firstIndex in firstArray)
+    {
+        isUnique = YES;
+        for (NSIndexPath *secondIndex in secondArray)
+        {
+            if (firstIndex.row != secondIndex.row || firstIndex.section != secondIndex.section)
+            {
+                isUnique = NO;
+                break;
+            }
+        }
+        if (isUnique)
+        {
+            [resultArray addObject:firstIndex];
+        }
+    }
+    
+    return resultArray;
 }
 
 # pragma mark GameFieldCell delegate methods
@@ -273,30 +353,61 @@
         {
             if (gameFieldCell.currentState == -1)
             {
-                GameFieldCell *currentlySelectedCell = self.gameFieldCells[self.currentlySelectedCellIndex.row][self.currentlySelectedCellIndex.section];
-                [currentlySelectedCell unhighlight];
-                
-                [gameFieldCell spawnBallwithColor:currentlySelectedCell.currentState];
-                [currentlySelectedCell removeBall];
-                
-                // remember ball positions in gameFieldState
-                self.gameFieldState[self.currentlySelectedCellIndex.row][self.currentlySelectedCellIndex.section] = -1;
-                self.gameFieldState[gameFieldCell.index.row][gameFieldCell.index.section] = gameFieldCell.currentState;
-                self.currentlySelectedCellIndex = nil;
-                
-                // delegate method that informs GameScene controller that turn is over
-                [self gameField:self movedBallFrom:currentlySelectedCell to:gameFieldCell];
+                // check if there is the way to pass from one cell to another
+                if ([self findPathAtStartX:self.currentlySelectedCellIndex.section
+                                    startY:self.currentlySelectedCellIndex.row
+                                      endX:gameFieldCell.index.section
+                                      endY:gameFieldCell.index.row])
+                {
+                    GameFieldCell *currentlySelectedCell = self.gameFieldCells[self.currentlySelectedCellIndex.row][self.currentlySelectedCellIndex.section];
+                    [currentlySelectedCell unhighlight];
+                    
+                    [gameFieldCell spawnBallwithColor:currentlySelectedCell.currentState];
+                    [currentlySelectedCell removeBall];
+                    
+                    // remember ball positions in gameFieldState
+                    self.gameFieldState[self.currentlySelectedCellIndex.row][self.currentlySelectedCellIndex.section] = -1;
+                    self.gameFieldState[gameFieldCell.index.row][gameFieldCell.index.section] = gameFieldCell.currentState;
+                    self.currentlySelectedCellIndex = nil;
+                    
+                    // delegate method that informs GameScene controller that turn is over
+                    [self.delegate gameField:self movedBallFrom:currentlySelectedCell to:gameFieldCell];
+                }
+            }
+            // if the cell is not empty, than reselect it
+            else
+            {
+                GameFieldCell *cell = self.gameFieldCells[self.currentlySelectedCellIndex.row][self.currentlySelectedCellIndex.section];
+                [cell unhighlight];
+                [gameFieldCell highlight];
+                self.currentlySelectedCellIndex = gameFieldCell.index;
             }
         }
     }
     // if cell is not yet selected, than select it
     else
     {
-        self.currentlySelectedCellIndex = gameFieldCell.index;
-        [gameFieldCell highlight];
+        if (gameFieldCell.currentState != -1)
+        {
+            self.currentlySelectedCellIndex = gameFieldCell.index;
+            [gameFieldCell highlight];
+        }
     }
 }
 
+-(void)testPrintGameFieldState
+{
+    NSMutableString *result = [NSMutableString stringWithString:@""];
+    for (int i = 0; i < self.numberOfRows; i++)
+    {
+        for (int j = 0; j < self.numberOfColumns; j++)
+        {
+            [result appendString:[NSString stringWithFormat:@"%d ", self.gameFieldState[i][j]]];
+        }
+        [result appendString:@"\n"];
+    }
+    NSLog(@"\n\n_____________________\n%@\n____________________\n\n", result);
+}
 
 #pragma - A star algorithm methods
 // the code bellow is from
@@ -306,7 +417,7 @@
 -(BOOL)spaceIsBlocked:(int)x :(int)y;
 {
     //general-purpose method to return whether a space is blocked
-    if(self.gameFieldState[x][y] == -1)
+    if(self.gameFieldState[y][x] != -1)
         return YES;
     else
         return NO;
@@ -352,11 +463,13 @@
     return lowest;
 }
 
--(BOOL)findPath:(int)startX :(int)startY :(int)endX :(int)endY
+-(BOOL)findPathAtStartX:(int)startX startY:(int)startY endX:(int)endX endY:(int)endY
 {
     //find path function. takes a starting point and end point and performs the A-Star algorithm
     //to find a path, if possible. Once a path is found it can be traced by following the last
     //node's parent nodes back to the start
+    
+    [self testPrintGameFieldState];
     
     int x,y;
     int newX,newY;
@@ -429,7 +542,7 @@
                     if (abs(x)!=abs(y)) // avoid 0,0 and diagonal elements
                     {
                         //simple bounds check for the demo app's array
-                        if((newX>=0)&&(newY>=0)&&(newX<20)&&(newY<20))
+                        if((newX>=0)&&(newY>=0)&&(newX<self.numberOfColumns)&&(newY<self.numberOfRows))
                         {
                             //if the node isn't in the open list...
                             if(![self nodeInArray: openList withX: newX Y:newY])

@@ -39,8 +39,6 @@
 		E1AE15D71B36AE2200E4FB34 /* SettingViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1AE15D51B36AE2200E4FB34 /* SettingViewController.xib */; };
 		E1AE15DC1B36AE3D00E4FB34 /* HelpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AE15DA1B36AE3D00E4FB34 /* HelpViewController.m */; };
 		E1AE15DD1B36AE3D00E4FB34 /* HelpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1AE15DB1B36AE3D00E4FB34 /* HelpViewController.xib */; };
-		E1AE15E21B36BD5600E4FB34 /* TestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E1AE15E01B36BD5600E4FB34 /* TestViewController.m */; };
-		E1AE15E31B36BD5600E4FB34 /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1AE15E11B36BD5600E4FB34 /* TestViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,9 +101,6 @@
 		E1AE15D91B36AE3D00E4FB34 /* HelpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpViewController.h; sourceTree = "<group>"; };
 		E1AE15DA1B36AE3D00E4FB34 /* HelpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpViewController.m; sourceTree = "<group>"; };
 		E1AE15DB1B36AE3D00E4FB34 /* HelpViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HelpViewController.xib; sourceTree = "<group>"; };
-		E1AE15DF1B36BD5600E4FB34 /* TestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewController.h; sourceTree = "<group>"; };
-		E1AE15E01B36BD5600E4FB34 /* TestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewController.m; sourceTree = "<group>"; };
-		E1AE15E11B36BD5600E4FB34 /* TestViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -319,9 +314,6 @@
 		E1AE15DE1B36BD3C00E4FB34 /* GameScene */ = {
 			isa = PBXGroup;
 			children = (
-				E1AE15DF1B36BD5600E4FB34 /* TestViewController.h */,
-				E1AE15E01B36BD5600E4FB34 /* TestViewController.m */,
-				E1AE15E11B36BD5600E4FB34 /* TestViewController.xib */,
 				E199FEE71B442AC100DDDADD /* GameSceneViewController.h */,
 				E199FEE81B442AC100DDDADD /* GameSceneViewController.m */,
 				E199FEE91B442AC100DDDADD /* GameSceneViewController.xib */,
@@ -421,7 +413,6 @@
 				E199FEE11B4420BF00DDDADD /* HighlightedCell.png in Resources */,
 				E199FEE51B4420BF00DDDADD /* VioletBall.png in Resources */,
 				E199FEDE1B4420BF00DDDADD /* Cell.png in Resources */,
-				E1AE15E31B36BD5600E4FB34 /* TestViewController.xib in Resources */,
 				E199FEEB1B442AC100DDDADD /* GameSceneViewController.xib in Resources */,
 				E199FEE01B4420BF00DDDADD /* GreenBall.png in Resources */,
 				E199FEE31B4420BF00DDDADD /* RedBall.png in Resources */,
@@ -455,7 +446,6 @@
 				E1AE15CF1B36AD5300E4FB34 /* LeadereboardViewController.m in Sources */,
 				E1AE15DC1B36AE3D00E4FB34 /* HelpViewController.m in Sources */,
 				E1AE15BF1B36A91600E4FB34 /* NewGameTypeViewController.m in Sources */,
-				E1AE15E21B36BD5600E4FB34 /* TestViewController.m in Sources */,
 				E1AE15D61B36AE2200E4FB34 /* SettingViewController.m in Sources */,
 				E199FEEA1B442AC100DDDADD /* GameSceneViewController.m in Sources */,
 			);

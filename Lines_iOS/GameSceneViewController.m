@@ -24,7 +24,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.gameField = [[GameField alloc] initEmptyFieldWithRows:3 columns:3 margin:10];
+    self.gameField = [[GameField alloc] initEmptyFieldWithRows:9 columns:9 margin:10];
     self.gameField.delegate = self;
     [self.view addSubview:self.gameField];
     
@@ -46,7 +46,6 @@
                                            [NSNumber numberWithInt:arc4random_uniform(7)]]];
 }
 
-
 #pragma mark - Game Delegate Methods
 -(void)gameFieldOverloaded:(GameField *)gameField
 {
@@ -56,6 +55,12 @@
 -(void)gameField:(GameField *)gameField movedBallFrom:(GameFieldCell *)startCell to:(GameFieldCell *)destinationCell
 {
     NSLog(@"\n\nBALL MOVED\n\n");
+    [gameField testPrintGameFieldState];
+    
+    [self.gameField spawnBallsWithColors:@[[NSNumber numberWithInt:arc4random_uniform(7)],
+                                           [NSNumber numberWithInt:arc4random_uniform(7)],
+                                           [NSNumber numberWithInt:arc4random_uniform(7)]]];
+    
 }
 
 /*

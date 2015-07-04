@@ -46,4 +46,6 @@
 // checks the whole game field for lines. If there any line return YES.
 -(BOOL)checkFieldForLines;
 
+-(void)testPrintGameFieldState;
+
 @end
